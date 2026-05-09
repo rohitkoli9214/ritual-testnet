@@ -4,7 +4,7 @@
 //  Works with: MetaMask, Coinbase, Brave, OKX,
 //              Rabby, Trust Wallet + any EIP-1193
 // ================================================
-const CONTRACT_ADDRESS = "0x98D5c4bc7DACc8dc986549053D1fD76A29788066";
+const CONTRACT_ADDRESS = "0x9dE763AA859AD6642d84B66bF5Ce8e93946858b7";
 
 const CONTRACT_ABI = [
   {
