@@ -1,0 +1,1088 @@
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #060914;
+    --bg2: #0b1020;
+    --bg3: #111829;
+    --border: rgba(99,120,255,0.15);
+    --border-bright: rgba(99,120,255,0.35);
+    --accent: #6378ff;
+    --accent2: #a78bfa;
+    --accent3: #38bdf8;
+    --text: #e8ecff;
+    --muted: #7b87b8;
+    --card: rgba(255,255,255,0.03);
+    --glow: rgba(99,120,255,0.12);
+    --green: #22d3a0;
+    --red: #f87171;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(99,120,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,120,255,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb-1 { width: 500px; height: 500px; background: rgba(99,120,255,0.1); top: -120px; left: -100px; }
+  .orb-2 { width: 400px; height: 400px; background: rgba(56,189,248,0.07); bottom: 100px; right: -80px; }
+  .orb-3 { width: 300px; height: 300px; background: rgba(167,139,250,0.06); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+  .wrapper { position: relative; z-index: 1; }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 48px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(6,9,20,0.90);
+    backdrop-filter: blur(16px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  /* LEFT — Ritual Official Logo + Brand */
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  /* Ritual Official Logo SVG Container */
+  .ritual-logo-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(99,120,255,0.2), rgba(167,139,250,0.15));
+    border: 1px solid rgba(99,120,255,0.3);
+    flex-shrink: 0;
+  }
+
+  /* Ritual's official "Pando tree" / radial star symbol */
+  .ritual-logo-wrap svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .brand-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.3px;
+  }
+
+  .brand-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    margin-top: 1px;
+  }
+
+  .nav-center {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .nav-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: rgba(99,120,255,0.12);
+    border: 1px solid rgba(99,120,255,0.25);
+    color: var(--accent2);
+    letter-spacing: 0.3px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    font-weight: 400;
+  }
+  .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+
+  /* RIGHT — Multi Wallet Button */
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+
+  .btn-faucet {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid var(--border-bright);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-faucet:hover { color: var(--text); border-color: var(--accent); background: rgba(99,120,255,0.08); }
+
+  /* Wallet button states */
+  .btn-wallet-nav {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 8px;
+    background: var(--accent);
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.2px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .btn-wallet-nav:hover { background: #7b8fff; transform: translateY(-1px); }
+  .btn-wallet-nav.connected {
+    background: rgba(34,211,160,0.1);
+    border: 1px solid rgba(34,211,160,0.3);
+    color: var(--green);
+  }
+  .btn-wallet-nav.connected:hover { background: rgba(34,211,160,0.18); transform: translateY(-1px); }
+
+  .btn-disconnect-nav {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: rgba(248,113,113,0.08);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--red);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    display: none;
+  }
+  .btn-disconnect-nav:hover { background: rgba(248,113,113,0.15); }
+  .btn-disconnect-nav.visible { display: flex; align-items: center; gap: 6px; }
+
+  /* ===== REOWN APPKIT BUTTON STYLING ===== */
+  /* Style the appkit-button web component to match our nav */
+  appkit-button {
+    --wui-font-family: 'DM Sans', sans-serif;
+  }
+
+  /* Override AppKit button to match our nav design */
+  .appkit-nav-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Custom connect button that triggers AppKit */
+  #customConnectBtn {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 8px;
+    background: var(--accent);
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.2px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  #customConnectBtn:hover { background: #7b8fff; transform: translateY(-1px); }
+  #customConnectBtn.connected {
+    background: rgba(34,211,160,0.1);
+    border: 1px solid rgba(34,211,160,0.3);
+    color: var(--green);
+  }
+  #customConnectBtn.connected:hover { background: rgba(34,211,160,0.18); }
+
+  #customDisconnectBtn {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: rgba(248,113,113,0.08);
+    border: 1px solid rgba(248,113,113,0.25);
+    color: var(--red);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    display: none;
+    align-items: center;
+    gap: 6px;
+  }
+  #customDisconnectBtn:hover { background: rgba(248,113,113,0.15); }
+  #customDisconnectBtn.show { display: flex; }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 48px;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 6px 14px;
+    background: rgba(99,120,255,0.1);
+    border: 1px solid rgba(99,120,255,0.2);
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(42px, 5.5vw, 72px);
+    line-height: 1.0;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+    color: #f0f4ff;
+  }
+
+  h1 span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 36px;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 14px 28px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 0.2px;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s;
+  }
+  .btn-primary:hover::after { background: rgba(255,255,255,0.08); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,120,255,0.3); }
+
+  .btn-outline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 14px 28px;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid var(--border-bright);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.04); border-color: var(--accent); transform: translateY(-1px); }
+
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat { display: flex; flex-direction: column; gap: 4px; }
+  .stat-value {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+  .stat-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+
+  /* ===== NFT CARD ===== */
+  .nft-card {
+    background: var(--bg3);
+    border: 1px solid var(--border-bright);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s;
+  }
+  .nft-card:hover { transform: translateY(-4px); }
+  .nft-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(99,120,255,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .nft-preview {
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #08101e 0%, #0d1535 40%, #0a0e1f 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* AI Neural Network SVG Art — the actual NFT image */
+  .nft-art-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nft-art-svg {
+    width: 85%;
+    height: 85%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .nft-art-svg.visible { opacity: 1; }
+
+  .nft-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    background: rgba(6,9,20,0.85);
+    border: 1px solid var(--border-bright);
+    border-radius: 100px;
+    color: var(--accent2);
+    backdrop-filter: blur(8px);
+    z-index: 2;
+  }
+
+  .nft-rarity-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    background: rgba(6,9,20,0.85);
+    border-radius: 100px;
+    backdrop-filter: blur(8px);
+    z-index: 2;
+  }
+
+  .nft-info { padding: 20px; }
+
+  .nft-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+  }
+
+  .nft-id {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .nft-attrs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .attr-pill {
+    padding: 6px 10px;
+    background: rgba(99,120,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .attr-key { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+  .attr-val { font-size: 12px; font-weight: 500; color: var(--accent2); }
+
+  .wallet-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(248,113,113,0.06);
+    border: 1px solid rgba(248,113,113,0.15);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--red);
+  }
+  .wallet-status.connected {
+    background: rgba(34,211,160,0.06);
+    border-color: rgba(34,211,160,0.2);
+    color: var(--green);
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+  .wallet-status.connected .status-dot { background: var(--green); animation: pulse 2s infinite; }
+
+  .nft-actions { display: flex; gap: 8px; }
+
+  .btn-connect {
+    flex: 1;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid var(--border-bright);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-connect:hover { background: rgba(255,255,255,0.04); border-color: var(--accent); }
+
+  .btn-mint {
+    flex: 1;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-mint:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(99,120,255,0.3); }
+
+  /* price tag */
+  .mint-price-tag {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    padding: 6px;
+    border-radius: 6px;
+    background: rgba(99,120,255,0.04);
+    border: 1px solid var(--border);
+  }
+  .mint-price-tag strong { color: var(--accent2); font-size: 13px; }
+
+  /* Mint modal overlay */
+  .mint-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(6px);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+  }
+  .mint-overlay.active { display: flex; }
+
+  .mint-modal {
+    background: var(--bg2);
+    border: 1px solid var(--border-bright);
+    border-radius: 20px;
+    padding: 32px;
+    width: 400px;
+    max-width: 90vw;
+    position: relative;
+  }
+
+  .mint-modal h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .mint-modal p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .mint-progress { margin-bottom: 24px; }
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+  .progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  .close-modal {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(255,255,255,0.06);
+    border: none;
+    color: var(--muted);
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .close-modal:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+
+  /* ===== SECTION LABELS ===== */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 3.5vw, 44px);
+    letter-spacing: -1px;
+    line-height: 1.1;
+    color: #f0f4ff;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  /* ===== FEATURES ===== */
+  .features {
+    padding: 100px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .feature-card {
+    padding: 28px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: all 0.25s;
+    cursor: default;
+  }
+  .feature-card:hover {
+    border-color: var(--border-bright);
+    background: rgba(99,120,255,0.04);
+    transform: translateY(-2px);
+  }
+
+  .feat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 18px;
+  }
+  .feat-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+  .feat-desc { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+  /* ===== NETWORK INFO ===== */
+  .network-section {
+    padding: 80px 48px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+
+  .network-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  /* Ritual symbol in network section */
+  .network-ritual-icon {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .ritual-big-logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(99,120,255,0.2), rgba(167,139,250,0.15));
+    border: 1px solid rgba(99,120,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .network-details { display: flex; flex-direction: column; gap: 14px; }
+
+  .detail-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: rgba(99,120,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  .detail-key { font-size: 13px; color: var(--muted); }
+  .detail-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .copy-btn {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    transition: all 0.15s;
+    font-family: 'DM Mono', monospace;
+  }
+  .copy-btn:hover { color: var(--accent); background: rgba(99,120,255,0.1); }
+
+  /* currency symbol with ritual logo inline */
+  .currency-with-logo {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .currency-mini-logo {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, rgba(99,120,255,0.4), rgba(167,139,250,0.3));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    padding: 32px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-copy { font-size: 13px; color: var(--muted); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text); }
+
+  .social-links { display: flex; gap: 10px; }
+  .social-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .social-btn:hover { border-color: var(--border-bright); color: var(--text); background: rgba(99,120,255,0.1); }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.6s ease forwards; }
+  .fade-up-1 { animation-delay: 0.1s; }
+  .fade-up-2 { animation-delay: 0.2s; }
+  .fade-up-3 { animation-delay: 0.3s; }
+
+  /* Neural net node pulse animation */
+  @keyframes nodePulse {
+    0%, 100% { opacity: 0.7; r: 4; }
+    50% { opacity: 1; r: 5.5; }
+  }
+  @keyframes lineFlow {
+    0% { stroke-dashoffset: 60; }
+    100% { stroke-dashoffset: 0; }
+  }
+  @keyframes orbFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-6px) rotate(2deg); }
+    66% { transform: translateY(4px) rotate(-2deg); }
+  }
+
+  .neural-node { animation: nodePulse 2.5s ease-in-out infinite; }
+  .neural-node:nth-child(2n) { animation-delay: 0.5s; }
+  .neural-node:nth-child(3n) { animation-delay: 1s; }
+  .neural-node:nth-child(4n) { animation-delay: 1.5s; }
+
+  .neural-line {
+    stroke-dasharray: 30 30;
+    animation: lineFlow 3s linear infinite;
+  }
+  .neural-line:nth-child(2n) { animation-delay: 1s; animation-duration: 4s; }
+  .neural-line:nth-child(3n) { animation-delay: 2s; animation-duration: 5s; }
+
+  .art-orb { animation: orbFloat 5s ease-in-out infinite; }
+  .art-orb:nth-child(2) { animation-delay: 1.5s; animation-duration: 6s; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--bg3);
+    border: 1px solid var(--border-bright);
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 13px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.3s ease;
+    z-index: 9999;
+    white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .toast.visible { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+    .features { padding: 60px 20px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .network-inner { grid-template-columns: 1fr; }
+    .network-section { padding: 60px 20px; }
+    footer { flex-direction: column; gap: 20px; text-align: center; }
+    .hero { padding: 60px 20px; }
+    h1 { font-size: 40px; }
+  }
+
+/* ===== WALLET CONNECT MODAL ===== */
+.wc-backdrop {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
+  z-index: 10000; align-items: center; justify-content: center;
+}
+.wc-backdrop.open { display: flex; }
+.wc-modal {
+  background: #0d1124; border: 1px solid rgba(99,120,255,0.3);
+  border-radius: 20px; width: 380px; max-width: 95vw; overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  animation: wcSlideIn 0.25s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes wcSlideIn {
+  from { opacity:0; transform:scale(0.92) translateY(16px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+.wc-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 22px 16px; border-bottom:1px solid rgba(99,120,255,0.1);
+}
+.wc-title { font-family:'Syne',sans-serif; font-weight:700; font-size:17px; color:#f0f4ff; letter-spacing:-0.3px; }
+.wc-subtitle { font-family:'DM Mono',monospace; font-size:10px; color:#7b87b8; letter-spacing:0.5px; margin-top:2px; }
+.wc-close {
+  width:30px; height:30px; border-radius:8px; background:rgba(255,255,255,0.06);
+  border:none; color:#7b87b8; font-size:16px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:all 0.15s;
+}
+.wc-close:hover { background:rgba(255,255,255,0.12); color:#f0f4ff; }
+.wc-body { padding:16px 14px 20px; }
+.wc-section-label {
+  font-family:'DM Mono',monospace; font-size:10px; color:#7b87b8;
+  letter-spacing:1.5px; text-transform:uppercase; padding:0 8px; margin-bottom:10px;
+}
+.wc-wallets { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
+.wc-wallet-btn {
+  display:flex; align-items:center; gap:14px; padding:13px 14px;
+  border-radius:12px; background:rgba(255,255,255,0.03);
+  border:1px solid rgba(99,120,255,0.12); cursor:pointer;
+  transition:all 0.18s; width:100%; text-align:left; position:relative; overflow:hidden;
+}
+.wc-wallet-btn:hover { background:rgba(99,120,255,0.08); border-color:rgba(99,120,255,0.3); transform:translateX(2px); }
+.wc-wallet-icon {
+  width:42px; height:42px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden;
+}
+.wc-wallet-icon img { width:42px; height:42px; border-radius:10px; object-fit:contain; }
+.wc-wallet-info { flex:1; }
+.wc-wallet-name { font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; color:#e8ecff; margin-bottom:2px; }
+.wc-wallet-desc { font-size:12px; color:#7b87b8; }
+.wc-wallet-tag {
+  font-family:'DM Mono',monospace; font-size:9px; padding:3px 8px;
+  border-radius:100px; background:rgba(99,120,255,0.12); color:#a78bfa;
+  border:1px solid rgba(99,120,255,0.2); white-space:nowrap;
+}
+.wc-wallet-tag.green { background:rgba(34,211,160,0.1); color:#22d3a0; border-color:rgba(34,211,160,0.2); }
+.wc-installed-dot {
+  width:8px; height:8px; border-radius:50%; background:#22d3a0;
+  position:absolute; bottom:10px; right:10px; box-shadow:0 0 0 2px #0d1124;
+}
+.wc-divider { height:1px; background:rgba(99,120,255,0.1); margin:12px 0; }
+.wc-wc-btn {
+  display:flex; align-items:center; gap:14px; padding:13px 14px;
+  border-radius:12px; background:rgba(99,120,255,0.05);
+  border:1px solid rgba(99,120,255,0.18); cursor:pointer;
+  transition:all 0.18s; width:100%; text-align:left;
+}
+.wc-wc-btn:hover { background:rgba(99,120,255,0.12); border-color:rgba(99,120,255,0.35); transform:translateX(2px); }
+.wc-wc-icon {
+  width:42px; height:42px; border-radius:10px;
+  background:linear-gradient(135deg,#3b99fc,#3b59f5);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.wc-modal-footer { padding:12px 22px 18px; text-align:center; }
+.wc-modal-footer p { font-size:11px; color:#4a5280; line-height:1.6; }
+.wc-modal-footer a { color:#6378ff; text-decoration:none; }
+.wc-modal-footer a:hover { text-decoration:underline; }
+.wc-connecting {
+  display:none; flex-direction:column; align-items:center;
+  gap:16px; padding:32px 22px; text-align:center;
+}
+.wc-connecting.active { display:flex; }
+.wc-spinner {
+  width:52px; height:52px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center; position:relative;
+}
+.wc-spinner::after {
+  content:''; position:absolute; inset:-4px; border-radius:18px;
+  border:2px solid transparent; border-top-color:#6378ff; border-right-color:#a78bfa;
+  animation:wcSpin 1s linear infinite;
+}
+@keyframes wcSpin { to { transform:rotate(360deg); } }
+.wc-conn-name { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; color:#f0f4ff; }
+.wc-conn-msg { font-size:13px; color:#7b87b8; }
+.wc-cancel {
+  font-size:13px; color:#7b87b8; background:transparent;
+  border:1px solid rgba(99,120,255,0.2); padding:8px 20px; border-radius:8px;
+  cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; margin-top:8px;
+}
+.wc-cancel:hover { color:#e8ecff; border-color:rgba(99,120,255,0.4); }
+.wc-no-wallet {
+  padding:12px 8px; font-size:12px; color:#7b87b8;
+  text-align:center; line-height:1.7;
+  background:rgba(248,113,113,0.05); border:1px solid rgba(248,113,113,0.15);
+  border-radius:10px; margin-bottom:12px;
+}
+.dynamic-nft-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.powered-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 30px;
+  padding: 16px;
+  border: 1px solid rgba(99,120,255,0.2);
+  background: rgba(99,120,255,0.05);
+  border-radius: 14px;
+  max-width: 420px;
+}
+
+.powered-cat {
+  width: 72px;
+  height: 72px; object-fit: cover;
+  border-radius: 14px;
+  border: 2px solid rgba(167,139,250,0.4);
+}
+
+.powered-title {
+  font-size: 12px;
+  color: #7b87b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.powered-desc {
+  font-size: 16px;
+  color: #ffffff;
+  margin-top: 4px;
+  line-height: 1.5;
+}.dynamic-nft-image{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:0;
+  display:block;
+}
+
+.nft-preview{
+  width:100%;
+  aspect-ratio:1/1;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.nft-art-container{
+  width:100%;
+  height:100%;
+}
